@@ -1,0 +1,48 @@
+version: '2.1'
+services:
+  eventum-group-ms:
+    container_name: eventum-group-ms
+    build: .
+    environment:
+      MYSQL_DATABASE: ev_groups
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: ev_groups_2020i
+      MYSQL_PORT: 3306
+      MYSQL_HOST: eventum-group-db
+    links:
+      - eventum-group-db
+    networks:
+      - example-network
+    depends_on:
+      eventum-group-db: 
+        condition: service_healthy
+    ports:
+      - "5000:5000"
+
+  eventum-group-db:
+    container_name: eventum-group-db
+    image: mysql:5.7
+    environment: # Definición de variables de entorn
+      MYSQL_DATABASE: ev_groups
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: ev_groups_2020i
+    healthcheck:
+      test: "mysqlcheck -u$$MYSQL_USER -p$$MYSQL_PASSWORD $$MYSQL_DATABASE"
+      interval: 20s
+      timeout: 5s
+      retries: 15
+    ports:  # Mapeo de puertos
+      - "3307:3306"
+    networks:
+      - example-network
+
+      
+networks:
+  example-network:
+    driver: bridge
+
+
+volumes:
+  db_volume:

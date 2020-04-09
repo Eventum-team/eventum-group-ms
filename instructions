@@ -1,0 +1,49 @@
+
+# crear ambiente
+python3 -m venv venv
+
+. venv/bin/activate
+
+pip install -r requirements.txt
+
+# Prender el ambiente y flask
+export FLASK_APP=index.py
+export FLASK_ENV=development
+flask run
+
+
+https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install
+
+https://stackoverflow.com/questions/49316462/how-to-update-existing-images-with-docker-compose
+
+
+-------------------
+
+python3 -m venv venv
+
+. venv/bin/activate
+
+export FLASK_APP=resources
+export FLASK_ENV=development
+
+export MYSQL_USER=admin
+export MYSQL_PASSWORD=1234
+export MYSQL_HOST=localhost
+export MYSQL_DATABASE=ev_groups
+export MYSQL_PORT=3306
+
+pip install -e .
+
+flask run
+
+------
+
+
+# fresh start
+docker system prune -a
+docker volume prune
+
+
+# to rebuild
+docker-compose build
+docker-compose up
