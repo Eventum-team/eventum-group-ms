@@ -12,4 +12,4 @@ db.init_app(app)
 db.create_all()
 
 
-import resources.catResource
+import resources.GroupTypeResource

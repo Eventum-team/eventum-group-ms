@@ -2,24 +2,24 @@ from models.GroupTypeModel import GroupTypeModel
 from models import db
 
 
-def get_all():
+def getAll():
     return GroupTypeModel.query.all()
 
 
-def add_instance(**kwargs):
+def addInstance(**kwargs):
     instance = GroupTypeModel(**kwargs)
 
     db.session.add(instance)
     db.session.commit()
 
 
-def delete_instance(id):
-    GroupTypeModel.query.filter_by(id=id).delete()
+def deleteInstance(id):
+    GroupTypeModel.query.filter_by(id_type=id).delete()
     db.session.commit()
 
 
-def edit_instance(id, **kwargs):
-    instance = GroupTypeModel.query.filter_by(id=id).all()[0]
-    for attr, new_value in kwargs:
+def editTnstance(id, **kwargs):
+    instance = GroupTypeModel.query.filter_by(id_type=id).all()[0]
+    for attr, new_value in kwargs.items():
         setattr(instance, attr, new_value)
     db.session.commit()
