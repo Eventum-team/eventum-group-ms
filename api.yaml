@@ -3,11 +3,11 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Microservice for Authentication
-  description: Java + MySQL
+  title: Microservice for Group
+  description: Python + MySQL
   license:
-    name: Software Architecture, 2020-I
-host: host:4000
+    name: Eventum, 2020-I
+host: host:5000
 basePath: /sa-auth-ms/resources
 schemes:
   - http
@@ -140,17 +140,16 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
             
-  /groups/name:
-    post:
+  /groups/name/{groupName}:
+    get:
       summary: Returns groups with a given name
       operationId: getGroupsByName
       parameters:
         - name: groupName
-          in: body
+          in: path
           description: The name of the group to be returned
           required: true
-          schema:
-              $ref: '#/definitions/GroupSearchNameInput'
+          type: string
       responses:
         '200':
           description: Ok
@@ -168,18 +167,17 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorModel'
-            
-  /groups/type:
-    post:
+          
+  /groups/type/{groupTypeId}:
+    get:
       summary: Returns groups of a given type
       operationId: getGroupByGroupTypeId
       parameters:
-        - name: groupType
-          in: body
+        - name: groupTypeId
+          in: path
           description: The group type id 
           required: true
-          schema:
-              $ref: '#/definitions/GroupSearchTypeInput'
+          type: integer
       responses:
         '200':
           description: Ok
@@ -199,17 +197,21 @@ paths:
             $ref: '#/definitions/ErrorModel'
             
             
-  /groups/name-type:
-    post:
+  /groups/name-type/{groupName}/{groupTypeId}:
+    get:
       summary: Returns groups of a given type and a given name
       operationId: getGroupByGroupTypeIdAndName
       parameters:
-        - name: searchParameters
-          in: body
-          description: The group type id and name
+        - name: groupName
+          in: path
+          description: The name of the group to be returned
           required: true
-          schema:
-              $ref: '#/definitions/GroupSearchInput'
+          type: string
+        - name: groupTypeId
+          in: path
+          description: The group type id 
+          required: true
+          type: integer
       responses:
         '200':
           description: Ok
@@ -234,7 +236,7 @@ paths:
       summary: Creates a new groupType
       operationId: createGroupType
       parameters:
-        - name: groupType
+        - name: groupTypeId
           in: body
           required: true
           description: Group type Object
@@ -388,28 +390,6 @@ definitions:
         type: string
       status:
         type: string
-        
-  GroupSearchInput:
-    type: object
-    properties:
-      name:
-        type: string
-      groupType:
-        type: integer
-        
-        
-  GroupSearchNameInput:
-    type: object
-    properties:
-      name:
-        type: string
-        
-        
-  GroupSearchTypeInput:
-    type: object
-    properties:
-      groupType:
-        type: integer
 
   GroupList:
     type: object
