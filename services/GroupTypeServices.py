@@ -2,11 +2,11 @@
 from repositories import GroupTypeRepository 
 
 
-def addGroupType(group_data):
-    newGroup = {
-        'name' : group_data['name']
+def addGroupType(groupTypeData):
+    newGroupType = {
+        'name' : groupTypeData['name']
     }
-    GroupTypeRepository.addInstance(**newGroup)
+    GroupTypeRepository.addInstance(**newGroupType)
 
 
 def getAllGroupTypes():

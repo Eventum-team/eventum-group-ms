@@ -1,26 +1,55 @@
 from repositories import GroupRepository 
+import datetime
+import json
 
 
-def addGroup(**kwargs):
-    GroupRepository.add_instance(**kwargs)
+def myconverter(o):
+    if isinstance(o, datetime.datetime):
+        return o.__str__()
+
+def addGroup(groupData):
+    newGroup = {
+        'id_type' : groupData['id_type'],
+        'name' : groupData['name'],
+        'description' : groupData['description'],
+        'contact_number' : groupData['contact_number'],
+        'status' : groupData['status']
+    }
+    GroupRepository.addInstance(**newGroup)
+
+    return json.dumps("Added"), 200
 
 
 def getAllGroups():
-    groups = GroupRepository.get_all()
-    all_groups = []
+    groups = GroupRepository.getAll()
+    allGroups = []
     for group in groups:
-        new_group = {
-            "id": group.id,
-            "name": group.name
+        newGroup = {
+            "id_group": group.id_group,
+            "id_type" : group.id_type,
+            "name": group.name,
+            "description" : group.description,
+            "created_date" : group.created_date,
+            "contact_number" : group.contact_number,
+            "status" : group.status
         }
-
-        all_groups.append(new_group)
+        allGroups.append(newGroup)
     
-    return all_groups
+    return json.dumps(allGroups, default=myconverter), 200
 
 
 def deleteGroupById(id):
-    GroupRepository.delete_instance(id)
+    GroupRepository.deleteInstance(id)
+    return json.dumps("Deleted"), 200
 
-def updateGroupById(id, **kwargs):
-    GroupRepository.edit_instance(id, **kwargs)
+def updateGroupById(id, groupData):
+    updateFields = {
+        'id_type' : groupData['id_type'],
+        'name' : groupData['name'],
+        'description' : groupData['description'],
+        'contact_number' : groupData['contact_number'],
+        'status' : groupData['status']
+    }
+    GroupRepository.editInstance(id, **updateFields)
+
+    return json.dumps("Edited"), 200
