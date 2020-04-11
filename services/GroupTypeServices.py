@@ -40,7 +40,7 @@ def getGroupTypeById(id):
         groupType = GroupTypeRepository.getInstance(id)
     except(IndexError):
         return json.dumps({
-            "message" : "Group Doesn't exist",
+            "message" : "Group type Doesn't exist",
             "code" : 404
             }), 404
         

@@ -372,11 +372,11 @@ definitions:
   GroupInput:
     type: object
     properties:
+      id_type:
+        type: integer
       name:
         type: string
       description:
-        type: string
-      created_date:
         type: string
       contact_number:
         type: string
