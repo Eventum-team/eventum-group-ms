@@ -8,7 +8,7 @@ info:
   license:
     name: Eventum, 2020-I
 host: host:5000
-basePath: /sa-auth-ms/resources
+basePath: /
 schemes:
   - http
 consumes:
@@ -55,12 +55,12 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /groups/{groupId}:
+  /groups/{group_id}:
     get:
       summary: Returns a group with the given id
       operationId: getGroupById
       parameters:
-        - name: groupId
+        - name: group_id
           in: path
           description: The id of the group to be returned
           required: true
@@ -87,7 +87,7 @@ paths:
       summary: Updates a group with the given id
       operationId: updateGroup
       parameters:
-        - name: groupId
+        - name: group_id
           in: path
           description: The id of the group to be updated
           required: true
@@ -119,7 +119,7 @@ paths:
       summary: Deletes a group with the given id
       operationId: deleteGroup
       parameters:
-        - name: groupId
+        - name: group_id
           in: path
           description: The id of the group to be deleted
           required: true
@@ -140,12 +140,12 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
             
-  /groups/name/{groupName}:
+  /groups/name/{group_name}:
     get:
       summary: Returns groups with a given name
       operationId: getGroupsByName
       parameters:
-        - name: groupName
+        - name: group_name
           in: path
           description: The name of the group to be returned
           required: true
@@ -168,12 +168,12 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
           
-  /groups/type/{groupTypeId}:
+  /groups/type/{type_id}:
     get:
       summary: Returns groups of a given type
       operationId: getGroupByGroupTypeId
       parameters:
-        - name: groupTypeId
+        - name: type_id
           in: path
           description: The group type id 
           required: true
@@ -197,17 +197,17 @@ paths:
             $ref: '#/definitions/ErrorModel'
             
             
-  /groups/name-type/{groupName}/{groupTypeId}:
+  /groups/name-type/{group_name}/{type_id}:
     get:
       summary: Returns groups of a given type and a given name
       operationId: getGroupByGroupTypeIdAndName
       parameters:
-        - name: groupName
+        - name: group_name
           in: path
           description: The name of the group to be returned
           required: true
           type: string
-        - name: groupTypeId
+        - name: type_id
           in: path
           description: The group type id 
           required: true
@@ -270,12 +270,12 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
   
-  /group-types/{groupTypeId}:
+  /group-types/{type_id}:
     get:
       summary: Returns a group type with the given id
       operationId: getGroupTypeById
       parameters:
-        - name: groupTypeId
+        - name: type_id
           in: path
           description: The id of the group type to be returned
           required: true
@@ -289,10 +289,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -302,7 +298,7 @@ paths:
       summary: Updates a group type with the given id
       operationId: updateGroupType
       parameters:
-        - name: groupTypeId
+        - name: type_id
           in: path
           description: The id of the group type to be updated
           required: true
@@ -334,7 +330,7 @@ paths:
       summary: Deletes a group type with the given id
       operationId: deleteGroupType
       parameters:
-        - name: groupTypeId
+        - name: type_id
           in: path
           description: The id of the group type to be deleted
           required: true
@@ -346,10 +342,6 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
