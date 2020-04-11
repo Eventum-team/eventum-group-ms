@@ -46,10 +46,6 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/GroupList'
-        '406':
-          description: Not Acceptable (Invalid Params)
-          schema:
-            $ref: '#/definitions/ErrorModel'
         '500':
           description: Internal Server Error
           schema:
@@ -70,14 +66,14 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/Group'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -102,14 +98,14 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -127,14 +123,6 @@ paths:
       responses:
         '200':
           description: Ok
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -155,14 +143,6 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/GroupList'
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -183,14 +163,10 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/GroupList'
-        '404':
-          description: Not Found
+        '400':
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -217,14 +193,10 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/GroupList'
-        '404':
-          description: Not Found
+        '400':
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -261,10 +233,6 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/GroupTypeList'
-        '406':
-          description: Not Acceptable (Invalid Params)
-          schema:
-            $ref: '#/definitions/ErrorModel'
         '500':
           description: Internal Server Error
           schema:
@@ -285,6 +253,10 @@ paths:
           description: Ok
           schema:
             $ref: '#/definitions/GroupType'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
         '404':
           description: Not Found
           schema:
@@ -313,14 +285,14 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
         '404':
           description: Not Found
           schema:
             $ref: '#/definitions/ErrorModel'
-        '406':
-            description: Not Acceptable (Invalid Params)
-            schema:
-              $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -338,10 +310,6 @@ paths:
       responses:
         '200':
           description: Ok
-        '404':
-          description: Not Found
-          schema:
-            $ref: '#/definitions/ErrorModel'
         '500':
           description: unexpected error
           schema:
@@ -431,9 +399,9 @@ definitions:
       - message
       - code
     properties:
-      message:
-        type: string
       code:
         type: number
+      name:
+        type: string
       description:
-        type: object
+        type: string

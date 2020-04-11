@@ -20,7 +20,7 @@ def addGroup(groupData):
     
     GroupRepository.addInstance(**newGroup)
 
-    return json.dumps("Added"), 200
+    return json.dumps("Created"), 201
 
 
 def getAllGroups():
@@ -53,7 +53,7 @@ def updateGroupById(id, groupData):
 
 
     GroupRepository.editInstance(id, **updateFields)
-    return json.dumps("Edited"), 200
+    return json.dumps("Edited"), 204
 
 
 def getGroupById(id):

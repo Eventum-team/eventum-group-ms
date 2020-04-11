@@ -12,7 +12,7 @@ def addGroupType(groupTypeData):
         raise BadRequest("json keys in body are not correct")
 
     GroupTypeRepository.addInstance(**newGroupType)
-    return json.dumps("Added"), 200
+    return json.dumps("Created"), 201
 
 
 def getAllGroupTypes():
