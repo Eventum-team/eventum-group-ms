@@ -34,3 +34,18 @@ def updateGroupTypeById(id, groupTypeData):
     GroupTypeRepository.editTnstance(id, **updateFields)
 
     return json.dumps("Edited"), 200
+
+def getGroupTypeById(id):
+    try:
+        groupType = GroupTypeRepository.getInstance(id)
+    except(IndexError):
+        return json.dumps({
+            "message" : "Group Doesn't exist",
+            "code" : 404
+            }), 404
+        
+    groupTypeDict = {
+        "id_type": groupType.id_type,
+        "name": groupType.name
+    }
+    return json.dumps(groupTypeDict), 200

@@ -23,3 +23,7 @@ def editTnstance(id, **kwargs):
     for attr, new_value in kwargs.items():
         setattr(instance, attr, new_value)
     db.session.commit()
+
+def getInstance(id):
+    instance = GroupTypeModel.query.filter_by(id_type=id).all()[0]
+    return instance

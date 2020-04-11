@@ -3,7 +3,7 @@ import datetime
 import json
 
 
-def myconverter(o):
+def datetimeConverter(o):
     if isinstance(o, datetime.datetime):
         return o.__str__()
 
@@ -35,7 +35,7 @@ def getAllGroups():
         }
         allGroups.append(newGroup)
     
-    return json.dumps(allGroups, default=myconverter), 200
+    return json.dumps(allGroups, default=datetimeConverter), 200
 
 
 def deleteGroupById(id):
@@ -53,3 +53,17 @@ def updateGroupById(id, groupData):
     GroupRepository.editInstance(id, **updateFields)
 
     return json.dumps("Edited"), 200
+
+
+def getGroupById(id):
+    group = GroupRepository.getInstance(id)
+    groupDict = {
+        "id_group": group.id_group,
+        "id_type" : group.id_type,
+        "name": group.name,
+        "description" : group.description,
+        "created_date" : group.created_date,
+        "contact_number" : group.contact_number,
+        "status" : group.status
+    }
+    return json.dumps(groupDict, default=datetimeConverter), 200

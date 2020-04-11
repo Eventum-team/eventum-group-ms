@@ -21,4 +21,8 @@ def removeGroup(groupId):
 def editGroup(groupId):
     data = request.get_json()
     return GroupServices.updateGroupById(id=groupId, groupData=data)
+
+@app.route('/groups/<groupId>', methods=['GET'])
+def getGroupById(groupId):
+    return GroupServices.getGroupById(groupId)
      
