@@ -1,17 +1,23 @@
 from repositories import GroupRepository 
 import datetime
+from werkzeug.exceptions import NotFound, BadRequest
 import json
 
 
 
 def addGroup(groupData):
-    newGroup = {
-        'id_type' : groupData['id_type'],
-        'name' : groupData['name'],
-        'description' : groupData['description'],
-        'contact_number' : groupData['contact_number'],
-        'status' : groupData['status']
-    }
+    try:
+        newGroup = {
+            'id_type' : groupData['id_type'],
+            'name' : groupData['name'],
+            'description' : groupData['description'],
+            'contact_number' : groupData['contact_number'],
+            'status' : groupData['status']
+        }
+    except(KeyError):
+        raise BadRequest("json keys in body are not correct")
+
+    
     GroupRepository.addInstance(**newGroup)
 
     return json.dumps("Added"), 200
@@ -24,24 +30,41 @@ def getAllGroups():
 
 
 def deleteGroupById(id):
+    if not id.isdecimal():
+        raise BadRequest("id_group must be an integer")
+
     GroupRepository.deleteInstance(id)
     return json.dumps("Deleted"), 200
 
 def updateGroupById(id, groupData):
-    updateFields = {
-        'id_type' : groupData['id_type'],
-        'name' : groupData['name'],
-        'description' : groupData['description'],
-        'contact_number' : groupData['contact_number'],
-        'status' : groupData['status']
-    }
-    GroupRepository.editInstance(id, **updateFields)
+    if not id.isdecimal():
+        raise BadRequest("id_group must be an integer")
 
+    try:
+        updateFields = {
+            'id_type' : groupData['id_type'],
+            'name' : groupData['name'],
+            'description' : groupData['description'],
+            'contact_number' : groupData['contact_number'],
+            'status' : groupData['status']
+        }
+    except(KeyError):
+        raise BadRequest("json keys in body are not correct")
+
+
+    GroupRepository.editInstance(id, **updateFields)
     return json.dumps("Edited"), 200
 
 
 def getGroupById(id):
-    group = GroupRepository.getInstance(id)
+    if not id.isdecimal():
+        raise BadRequest("id_group must be an integer")
+
+    try:
+        group = GroupRepository.getInstance(id)
+    except(IndexError):
+        raise NotFound(description="Group doesn't exist")
+
     groupDict = {
         "id_group": group.id_group,
         "id_type" : group.id_type,
@@ -61,12 +84,18 @@ def getGroupsByName(name):
 
 
 def getGroupsByTopicId(id_type):
+    if not id_type.isdecimal():
+        raise BadRequest("id_type must be an integer")
+
     groups = GroupRepository.getInstanceByTypeId(id_type)
     selectedGroups = formatGroupList(groups)
     return json.dumps(selectedGroups, default=datetimeConverter), 200
 
 
 def getGroupsByNameAndTopicId(name, id_type):
+    if not id_type.isdecimal():
+        raise BadRequest("id_type must be an integer")
+
     groups = GroupRepository.getInstanceByNameAndTypeId(formatSearch(name), id_type)
     selectedGroups = formatGroupList(groups)
     return json.dumps(selectedGroups, default=datetimeConverter), 200

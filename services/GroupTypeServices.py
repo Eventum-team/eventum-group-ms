@@ -1,11 +1,16 @@
 import json
 from repositories import GroupTypeRepository 
+from werkzeug.exceptions import NotFound, BadRequest
 
 
 def addGroupType(groupTypeData):
-    newGroupType = {
-        'name' : groupTypeData['name']
-    }
+    try:
+        newGroupType = {
+            'name' : groupTypeData['name']
+        }
+    except(KeyError):
+        raise BadRequest("json keys in body are not correct")
+
     GroupTypeRepository.addInstance(**newGroupType)
     return json.dumps("Added"), 200
 
@@ -24,25 +29,39 @@ def getAllGroupTypes():
 
 
 def deleteGroupTypeById(id):
+    if not id.isdecimal():
+        raise BadRequest("id_type must be an integer")
+
     GroupTypeRepository.deleteInstance(id)
     return json.dumps("Deleted"), 200
 
 def updateGroupTypeById(id, groupTypeData):
-    updateFields = {
-        'name' : groupTypeData['name']
-    }
-    GroupTypeRepository.editTnstance(id, **updateFields)
+    if not id.isdecimal():
+        raise BadRequest("id_type must be an integer")
+
+    try:
+        updateFields = {
+            'name' : groupTypeData['name']
+        }
+    except(KeyError):
+        raise BadRequest("json keys in body are not correct")
+        
+
+    try:
+        GroupTypeRepository.editTnstance(id, **updateFields)
+    except(IndexError):
+        raise NotFound(description="Group Type doesn't exist")
 
     return json.dumps("Edited"), 200
 
 def getGroupTypeById(id):
+    if not id.isdecimal():
+        raise BadRequest("id_type must be an integer")
+
     try:
         groupType = GroupTypeRepository.getInstance(id)
     except(IndexError):
-        return json.dumps({
-            "message" : "Group type Doesn't exist",
-            "code" : 404
-            }), 404
+        raise NotFound(description="Group Type doesn't exist")
         
     groupTypeDict = {
         "id_type": groupType.id_type,
