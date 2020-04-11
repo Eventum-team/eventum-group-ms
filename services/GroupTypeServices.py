@@ -49,3 +49,4 @@ def getGroupTypeById(id):
         "name": groupType.name
     }
     return json.dumps(groupTypeDict), 200
+

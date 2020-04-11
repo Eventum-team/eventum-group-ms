@@ -13,17 +13,17 @@ def addGroupType():
     return GroupTypeServices.addGroupType(groupTypeData)
     
 
-@app.route('/group-types/<groupTypeId>', methods=['DELETE'])
-def removeGroupTypeById(groupTypeId):
-    return GroupTypeServices.deleteGroupTypeById(id=groupTypeId)
+@app.route('/group-types/<type_id>', methods=['DELETE'])
+def removeGroupTypeById(type_id):
+    return GroupTypeServices.deleteGroupTypeById(id=type_id)
     
 
 
-@app.route('/group-types/<groupTypeId>', methods=['PUT'])
-def editGroupTypeById(groupTypeId):
+@app.route('/group-types/<type_id>', methods=['PUT'])
+def editGroupTypeById(type_id):
     groupTypeData = request.get_json()
-    return GroupTypeServices.updateGroupTypeById(id=groupTypeId, groupTypeData=groupTypeData)
+    return GroupTypeServices.updateGroupTypeById(id=type_id, groupTypeData=groupTypeData)
     
-@app.route('/group-types/<groupTypeId>', methods=['GET'])
-def getGroupTypeById(groupTypeId):
-    return GroupTypeServices.getGroupTypeById(groupTypeId)
+@app.route('/group-types/<type_id>', methods=['GET'])
+def getGroupTypeById(type_id):
+    return GroupTypeServices.getGroupTypeById(type_id)
