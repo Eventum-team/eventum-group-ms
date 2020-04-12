@@ -1,0 +1,407 @@
+#Test with: http://editor.swagger.io/
+
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Microservice for Group
+  description: Python + MySQL
+  license:
+    name: Eventum, 2020-I
+host: host:5000
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /groups:
+    post:
+      summary: Creates a new group
+      operationId: createGroup
+      parameters:
+        - name: group
+          in: body
+          required: true
+          description: Group Object
+          schema:
+            $ref: '#/definitions/GroupInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    get:
+      summary: Returns all groups
+      operationId: getAllGroups
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/GroupList'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /groups/{group_id}:
+    get:
+      summary: Returns a group with the given id
+      operationId: getGroupById
+      parameters:
+        - name: group_id
+          in: path
+          description: The id of the group to be returned
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Group'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    put:
+      summary: Updates a group with the given id
+      operationId: updateGroup
+      parameters:
+        - name: group_id
+          in: path
+          description: The id of the group to be updated
+          required: true
+          type: integer
+        - name: group
+          in: body
+          required: true
+          description: Group Object
+          schema:
+            $ref: '#/definitions/GroupInput'
+            
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    delete:
+      summary: Deletes a group with the given id
+      operationId: deleteGroup
+      parameters:
+        - name: group_id
+          in: path
+          description: The id of the group to be deleted
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+            
+  /groups/name/{group_name}:
+    get:
+      summary: Returns groups with a given name
+      operationId: getGroupsByName
+      parameters:
+        - name: group_name
+          in: path
+          description: The name of the group to be returned
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/GroupList'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+          
+  /groups/type/{type_id}:
+    get:
+      summary: Returns groups of a given type
+      operationId: getGroupByGroupTypeId
+      parameters:
+        - name: type_id
+          in: path
+          description: The group type id 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/GroupList'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+            
+            
+  /groups/name-type/{group_name}/{type_id}:
+    get:
+      summary: Returns groups of a given type and a given name
+      operationId: getGroupByGroupTypeIdAndName
+      parameters:
+        - name: group_name
+          in: path
+          description: The name of the group to be returned
+          required: true
+          type: string
+        - name: type_id
+          in: path
+          description: The group type id 
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/GroupList'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    
+            
+  /group-types:
+    post:
+      summary: Creates a new groupType
+      operationId: createGroupType
+      parameters:
+        - name: groupTypeId
+          in: body
+          required: true
+          description: Group type Object
+          schema:
+            $ref: '#/definitions/GroupTypeInput'
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+    get:
+      summary: Returns all group types
+      operationId: getAllGroupTypes
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/GroupTypeList'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  
+  /group-types/{type_id}:
+    get:
+      summary: Returns a group type with the given id
+      operationId: getGroupTypeById
+      parameters:
+        - name: type_id
+          in: path
+          description: The id of the group type to be returned
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/GroupType'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    put:
+      summary: Updates a group type with the given id
+      operationId: updateGroupType
+      parameters:
+        - name: type_id
+          in: path
+          description: The id of the group type to be updated
+          required: true
+          type: integer
+        - name: group
+          in: body
+          required: true
+          description: Group Object
+          schema:
+            $ref: '#/definitions/GroupTypeInput'
+            
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    delete:
+      summary: Deletes a group type with the given id
+      operationId: deleteGroupType
+      parameters:
+        - name: type_id
+          in: path
+          description: The id of the group type to be deleted
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Ok
+        '500':
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+            
+definitions:
+
+  # Users
+  Group:
+    type: object
+    properties:
+      id_group:
+        type: integer
+      id_type:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      created_date:
+        type: string
+      contact_number:
+        type: string
+      status:
+        type: string
+
+  GroupInput:
+    type: object
+    properties:
+      id_type:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      contact_number:
+        type: string
+      status:
+        type: string
+
+  GroupList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/Group'
+
+  # Group type
+  GroupType:
+    type : object
+    properties:
+      id_type:
+        type: integer
+      name:
+        type: string
+        
+  GroupTypeInput:
+    type : object
+    properties:
+      name:
+        type: string
+        
+  GroupTypeList:
+    type: object
+    required:
+      - total
+      - list
+    properties:
+      total:
+        type: number
+      list:
+        type: array
+        items:
+          $ref: '#/definitions/GroupType'
+  
+# Errors
+  ErrorModel:
+    type: object
+    required:
+      - message
+      - code
+    properties:
+      code:
+        type: number
+      name:
+        type: string
+      description:
+        type: string

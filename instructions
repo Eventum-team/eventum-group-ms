@@ -17,7 +17,7 @@ https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install
 https://stackoverflow.com/questions/49316462/how-to-update-existing-images-with-docker-compose
 
 
--------------------
+--------- PARA CREARLO DESDE EL INICIO
 
 python3 -m venv venv
 
@@ -36,7 +36,21 @@ pip install -e .
 
 flask run
 
-------
+
+--------PARA VOVLERLO A ENCENDER
+
+. venv/bin/activate
+
+export FLASK_APP=resources
+export MYSQL_USER=admin
+export MYSQL_PASSWORD=1234
+export MYSQL_HOST=localhost
+export MYSQL_DATABASE=ev_groups
+export MYSQL_PORT=3306
+
+flask run
+
+------ DOCKER LIMPIAR
 
 
 # fresh start
