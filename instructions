@@ -42,6 +42,7 @@ flask run
 . venv/bin/activate
 
 export FLASK_APP=resources
+export FLASK_ENV=development
 export MYSQL_USER=admin
 export MYSQL_PASSWORD=1234
 export MYSQL_HOST=localhost
@@ -61,3 +62,15 @@ docker volume prune
 # to rebuild
 docker-compose build
 docker-compose up
+
+
+--------- ENCENDER Y APAGAR mySQL
+
+
+
+
+sudo /etc/init.d/mysqld stop
+sudo service mysql stop
+
+sudo service mysql start
+sudo /etc/init.d/mysql start

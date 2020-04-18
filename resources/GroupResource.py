@@ -13,27 +13,27 @@ def addGroup():
     data = request.get_json()
     return GroupServices.addGroup(data)
 
-@app.route('/groups/<group_id>', methods=['DELETE'])
-def removeGroup(group_id):
-    return GroupServices.deleteGroupById(id=group_id)
+@app.route('/groups/<id_group>', methods=['DELETE'])
+def removeGroup(id_group):
+    return GroupServices.deleteGroupById(id=id_group)
     
-@app.route('/groups/<group_id>', methods=['PUT'])
-def editGroup(group_id):
+@app.route('/groups/<id_group>', methods=['PUT'])
+def editGroup(id_group):
     data = request.get_json()
-    return GroupServices.updateGroupById(id=group_id, groupData=data)
+    return GroupServices.updateGroupById(id=id_group, groupData=data)
 
-@app.route('/groups/<group_id>', methods=['GET'])
-def getGroupById(group_id):
-    return GroupServices.getGroupById(group_id)
+@app.route('/groups/<id_group>', methods=['GET'])
+def getGroupById(id_group):
+    return GroupServices.getGroupById(id_group)
 
-@app.route('/groups/name/<group_name>', methods=['GET'])
-def getGroupsByName(group_name):
-    return GroupServices.getGroupsByName(group_name)
+@app.route('/groups/filter', methods=['GET'])
+def filter():
+    name = request.args.get('name')
+    id_type = request.args.get('id_type')   
 
-@app.route('/groups/type/<type_id>', methods=['GET'])
-def getGroupsByTopicId(type_id):
-    return GroupServices.getGroupsByTopicId(type_id)
-
-@app.route('/groups/name-type/<group_name>/<type_id>', methods=['GET'])
-def getGroupsByNameAndTopicId(group_name, type_id):
-    return GroupServices.getGroupsByNameAndTopicId(group_name, type_id)
+    if name is not None and id_type is not None:
+        return GroupServices.getGroupsByNameAndTopicId(name, id_type)
+    elif name is not None:
+        return GroupServices.getGroupsByName(name)
+    elif id_type is not None:
+        return GroupServices.getGroupsByTopicId(id_type)
