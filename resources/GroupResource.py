@@ -31,9 +31,12 @@ def filter():
     name = request.args.get('name')
     id_type = request.args.get('id_type')   
 
-    if name is not None and id_type is not None:
+    if name is not '' and id_type is not '':
+        print ('1')
         return GroupServices.getGroupsByNameAndTopicId(name, id_type)
-    elif name is not None:
+    elif name is not '':
+        print ('2')
         return GroupServices.getGroupsByName(name)
-    elif id_type is not None:
+    elif id_type is not '':
+        print ('3')
         return GroupServices.getGroupsByTopicId(id_type)

@@ -78,12 +78,18 @@ def getGroupById(id):
 
 
 def getGroupsByName(name):
+    if name is None:
+        raise BadRequest("Put id_type and name in the get query : filter?name=&id_type=")
+
     groups = GroupRepository.getInstanceByName(formatSearch(name))
     selectedGroups = formatGroupList(groups)
     return json.dumps(selectedGroups, default=datetimeConverter), 200
 
 
 def getGroupsByTopicId(id_type):
+    if id_type is None:
+        raise BadRequest("Put id_type and name in the get query : filter?name=&id_type=")
+
     if not id_type.isdecimal():
         raise BadRequest("id_type must be an integer")
 
@@ -93,6 +99,9 @@ def getGroupsByTopicId(id_type):
 
 
 def getGroupsByNameAndTopicId(name, id_type):
+    if id_type is None or name is None:
+        raise BadRequest("Put id_type and name in the get query :  filter?name=&id_type=")
+
     if not id_type.isdecimal():
         raise BadRequest("id_type must be an integer")
 

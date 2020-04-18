@@ -4,7 +4,7 @@ swagger: '2.0'
 info:
   version: 1.0.0
   title: Microservice for Group
-  description: Python + MySQL
+  description: Python + Flask + MySQL
   license:
     name: Eventum, 2020-I
 host: host:5000
@@ -51,12 +51,12 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /groups/{group_id}:
+  /groups/{id_group}:
     get:
       summary: Returns a group with the given id
       operationId: getGroupById
       parameters:
-        - name: group_id
+        - name: id_group
           in: path
           description: The id of the group to be returned
           required: true
@@ -83,7 +83,7 @@ paths:
       summary: Updates a group with the given id
       operationId: updateGroup
       parameters:
-        - name: group_id
+        - name: id_group
           in: path
           description: The id of the group to be updated
           required: true
@@ -115,7 +115,7 @@ paths:
       summary: Deletes a group with the given id
       operationId: deleteGroup
       parameters:
-        - name: group_id
+        - name: id_group
           in: path
           description: The id of the group to be deleted
           required: true
@@ -128,34 +128,21 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
             
-  /groups/name/{group_name}:
+            
+            
+  /groups/filter:
     get:
-      summary: Returns groups with a given name
-      operationId: getGroupsByName
+      summary: Returns all groups given a name and id_type ?name={Group Name}&id_type={id}
+      operationId: getEventsByOwner
       parameters:
-        - name: group_name
-          in: path
-          description: The name of the group to be returned
+        - name: name
+          in: query
+          description: name of a group, if dont want to filter by name just send en empty string " ".
           required: true
           type: string
-      responses:
-        '200':
-          description: Ok
-          schema:
-            $ref: '#/definitions/GroupList'
-        '500':
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/ErrorModel'
-          
-  /groups/type/{type_id}:
-    get:
-      summary: Returns groups of a given type
-      operationId: getGroupByGroupTypeId
-      parameters:
-        - name: type_id
-          in: path
-          description: The group type id 
+        - name: id_type
+          in: query
+          description: id_type of group type, if dont want to filter by id just send en empty string " ".
           required: true
           type: integer
       responses:
@@ -172,35 +159,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
             
-            
-  /groups/name-type/{group_name}/{type_id}:
-    get:
-      summary: Returns groups of a given type and a given name
-      operationId: getGroupByGroupTypeIdAndName
-      parameters:
-        - name: group_name
-          in: path
-          description: The name of the group to be returned
-          required: true
-          type: string
-        - name: type_id
-          in: path
-          description: The group type id 
-          required: true
-          type: integer
-      responses:
-        '200':
-          description: Ok
-          schema:
-            $ref: '#/definitions/GroupList'
-        '400':
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        '500':
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/ErrorModel'
+
     
             
   /group-types:
