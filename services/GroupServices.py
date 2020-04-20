@@ -18,10 +18,17 @@ def addGroup(groupData):
         raise BadRequest("json keys in body are not correct")
 
     
-    GroupRepository.addInstance(**newGroup)
-
-    return json.dumps("Created"), 201
-
+    createdGroup = GroupRepository.addInstance(**newGroup)
+    
+    return {
+        "id_group": createdGroup.id_group,
+        "id_type" : createdGroup.id_type,
+        "name": createdGroup.name,
+        "description" : createdGroup.description,
+        "created_date" : createdGroup.created_date,
+        "contact_number" : createdGroup.contact_number,
+        "status" : createdGroup.status
+    }, 201
 
 def getAllGroups():
     groups = GroupRepository.getAll()

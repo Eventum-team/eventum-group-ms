@@ -12,6 +12,8 @@ def addInstance(**kwargs):
     db.session.add(instance)
     db.session.commit()
 
+    return instance
+
 
 def deleteInstance(id):
     GroupModel.query.filter_by(id_group=id).delete()
