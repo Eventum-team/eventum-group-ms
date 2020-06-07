@@ -1,3 +1,11 @@
-flask==1.0.2
-flask-sqlalchemy==2.3.0
-pymysql
+click==7.1.1
+-e git+https://github.com/Eventum-team/eventum-group-ms.git@b9c92006c1af486eab5289aeaab2e5f206b00306#egg=eventum_group_ms
+Flask==1.1.2
+Flask-SQLAlchemy==2.4.1
+gunicorn==20.0.4
+itsdangerous==1.1.0
+Jinja2==2.11.1
+MarkupSafe==1.1.1
+PyMySQL==0.9.3
+SQLAlchemy==1.3.16
+Werkzeug==1.0.1

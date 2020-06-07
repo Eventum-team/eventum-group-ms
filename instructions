@@ -74,3 +74,32 @@ sudo service mysql stop
 
 sudo service mysql start
 sudo /etc/init.d/mysql start
+
+
+
+
+------------------------------
+
+
+
+. venv/bin/activate
+
+export FLASK_APP=resources
+export MYSQL_USER=admin
+export MYSQL_PASSWORD=1234
+export MYSQL_HOST=localhost
+export MYSQL_DATABASE=ev_groups
+export MYSQL_PORT=3306
+
+flask run
+
+
+
+
+
+
+
+
+
+
+
