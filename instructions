@@ -2,8 +2,10 @@
 # crear ambiente
 python3 -m venv venv
 
+# activar el ambiente 
 . venv/bin/activate
 
+# instalar los requerimientos
 pip install -r requirements.txt
 
 # Prender el ambiente y flask
@@ -37,7 +39,7 @@ pip install -e .
 flask run
 
 
---------PARA VOVLERLO A ENCENDER
+-------- MODO DESARROLLO
 
 . venv/bin/activate
 
@@ -78,7 +80,7 @@ sudo /etc/init.d/mysql start
 
 
 
-------------------------------
+---------- CORRER EN MODO NO DESARROLLO
 
 
 
@@ -95,11 +97,15 @@ flask run
 
 
 
+--------- CORRER PARA PRODUCCION CON GUNICORN
 
+. venv/bin/activate
 
+export FLASK_APP=resources
+export MYSQL_USER=admin
+export MYSQL_PASSWORD=1234
+export MYSQL_HOST=localhost
+export MYSQL_DATABASE=ev_groups
+export MYSQL_PORT=3306
 
-
-
-
-
-
+gunicorn -b localhost:5000 resources:app
