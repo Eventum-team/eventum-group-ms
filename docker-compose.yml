@@ -38,6 +38,19 @@ services:
     networks:
       - example-network
 
+  nginx:
+    container_name: nginx
+    restart: always
+    build: ./nginx
+    ports:
+      - "80:80"
+    links:
+      - eventum-group-ms
+    networks:
+      - example-network
+    depends_on:
+      - eventum-group-ms
+
       
 networks:
   example-network:
